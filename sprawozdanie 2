@@ -1,0 +1,231 @@
+a)	 Klasa punktmaterialny
+
+
+public class punktmaterialny {
+    private int m; //masa
+    public punktmaterialny(){ //konstruktor domyślny
+        this.m=1; //parametr niejawny
+    }
+    public punktmaterialny(int a){ //konstruktor z parametrem
+        if(a>0){
+            this.m=a;
+        }
+        else{
+            System.out.println("Masa musi byc dodatnia!");
+        }
+    }
+    public int getMasa(){ //akcesor
+        return this.m;
+    }
+    public int zmienMase(int c){ //akcesor
+        this.m = c;
+        return this.m;
+    }
+    public int moment(){ //obliczanie momentu bezwładności, zwraca "i"
+        int i=0;
+        return i;
+    }
+    public int twsteinera(int d){ //obliczanie momentu bezwładości z twierdzenia Steinera
+        int MB;
+        MB=moment()+this.m*d*d;
+        return MB;
+    }
+    public void nazwa(){ //klasa zwracająca nazwe
+        System.out.println("Punkt materialny");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+b)	Klasa walec
+
+
+
+
+public class Walec extends punktmaterialny{   //Klasa pochodna
+
+    private int promien, wysokosc;
+
+    public Walec() {
+        super();      //super konstruktor domyslny
+        promien = 1;
+        wysokosc = 5;
+        }
+
+public Walec(int masa, int promien, int wysokosc) {
+        super(masa);   //super konstruktor z parametrem
+        this.promien = promien;
+        this.wysokosc = wysokosc;
+        }
+public int inert() {      //przeciazenie metody inert()
+        return (getMasa() * promien * promien) / 2;
+        }
+
+
+public void setPromien(int promien) {
+        if (promien > 0)
+        this.promien = promien;
+        else
+        System.out.println("Promien musi byc dodatni!");
+        }
+
+public int getPromien() {
+        return promien;
+        }
+
+public void setWysokosc(int wysokosc) {
+        if (wysokosc > 0)
+        this.wysokosc = wysokosc;
+        else
+        System.out.println("Wysokosc musi byc dodatnia!");
+        }
+
+public int getWysokosc() {
+        return wysokosc;
+        }
+
+public String description() {     //przeciazenie metody description()
+        return "Walec";
+        }
+        }
+
+
+
+
+
+
+
+
+c)	Klasa Kula
+
+public class Kula extends punktmaterialny {  //Klasa pochodna
+    private int promien;
+
+    public Kula() {
+        super();
+        promien = 1;
+    }
+
+    public Kula(int masa, int promien) {
+        super(masa);
+        this.promien = promien;
+    }
+    public int inert() {      //przeciazenie metody inert()
+        return 2*(getMasa() * promien * promien)/5;
+    }
+
+    public void setPromien(int promien) {
+        if (promien > 0)
+            this.promien = promien;
+        else
+            System.out.println("Promien musi byc dodatni!");
+    }
+
+    public int getPromien() {
+        return promien;
+    }
+
+    public String description() {     //przeciazenie metody description()
+        return "Kula";
+    }
+}
+
+d)	Klasa Pret
+
+public class Pret extends punktmaterialny{  //Klasa pochodna
+    private int promien, dlugosc;
+
+    public Pret() {
+        super();
+        promien = 1;
+        dlugosc = 5;
+    }
+
+    public Pret(int masa, int promien, int dlugosc) {
+        super(masa);
+        this.promien = promien;
+        this.dlugosc = dlugosc;
+    }
+    public int inert() {      //przeciazenie metody inert()
+        return (getMasa() * promien * promien) / 12;
+    }
+
+    public void setPromien(int promien) {
+        if (promien > 0)
+            this.promien = promien;
+        else
+            System.out.println("Promien musi byc dodatni!");
+    }
+
+    public int getPromien() {
+        return promien;
+    }
+
+    public void setDlugosc(int dlugosc) {
+        if (promien > 0)
+            this.dlugosc = dlugosc;
+        else
+            System.out.println("Dlugosc musi byc dodatnia!");
+    }
+
+    public int getDlugosc() {
+        return dlugosc;
+    }
+
+    public String description() {     //przeciazenie metody description()
+        return "Pret";
+    }
+
+Funckja main
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Walec walec = new Walec(10, 5, 15);
+        Kula kula = new Kula(14, 43);
+        Pret pret = new Pret(23, 11, 32);
+
+        System.out.println(walec.description() + ", masa: "+ walec.getMasa() + ", promien: " + walec.getPromien() + ", wysokosc: " + walec.getWysokosc() +", moment bezwladnosci: " + walec.inert() + ", wzgledem wybranej osi: " + walec.twsteinera(2));
+
+        System.out.println(kula.description() + ", masa: "+ kula.getMasa() + ", promien: " + kula.getPromien() + ", moment bezwladnosci: " + kula.inert() + ", wzgledem wybranej osi: " + kula.twsteinera(12));
+
+        System.out.println(pret.description() + ", masa: "+ pret.getMasa() + ", promien: " + pret.getPromien() + ", dlugosc: " + pret.getDlugosc() +", moment bezwladnosci: " + pret.inert() + ", wzgledem wybranej osi: " + pret.twsteinera(31));
+
+        System.out.println("\n");
+
+        //tablice obiektow
+        Walec[] walce = new Walec[8];
+        Kula[] kulki = new Kula[8];
+        Pret[] prety = new Pret[8];
+
+        //inicjalizacja parametrow
+        for (int i=0; i<walce.length; i++) {
+            walce[i]= new Walec(i, i+10, i * 2);
+            kulki[i]= new Kula(i + 4,i * 2);
+            prety[i]= new Pret(i, i+10, i * 2);
+        }
+
+        for(int i=0; i<walce.length; i++) {
+            System.out.println(walce[i].description() + i + ", masa: "+ walce[i].getMasa() + ", promien: " + walce[i].getPromien() + ", wysokosc: " + walce[i].getWysokosc() +", moment bezwladnosci: " + walce[i].inert());
+            System.out.println(kulki[i].description() + i + ", masa: "+ kulki[i].getMasa() + ", promien: " + kulki[i].getPromien() + ", moment bezwladnosci: " + kulki[i].inert());
+            System.out.println(prety[i].description() + i + ", masa: "+ prety[i].getMasa() + ", promien: " + prety[i].getPromien() + ", dlugosc: " + prety[i].getDlugosc() +", moment bezwladnosci: " + prety[i].inert());
+            System.out.println("\n");
+        }
+
+        //wyswietlenie momentow bezwladnosci wzgledem osi
+        for(int i=0; i<walce.length; i++) {
+            System.out.println(walce[i].description() + " moment bezwladnosci wzgledem osi oddalonej o 10: " + walce[i].twsteinera(10));
+            System.out.println(kulki[i].description() + " moment bezwladnosci wzgledem osi oddalonej o 10: " + kulki[i].twsteinera(10));
+            System.out.println(prety[i].description() + " moment bezwladnosci wzgledem osi oddalonej o 10: " + prety[i].twsteinera(10));
+        }
+    }
+}
